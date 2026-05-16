@@ -1,0 +1,27 @@
+<aside class="meta-sidebar post-rail" aria-label="Post navigation">
+  <section class="widget post-toc" data-post-toc hidden>
+    <h2>On This Page</h2>
+    <nav aria-label="Table of contents"></nav>
+  </section>
+  <section class="widget">
+    <h2>Post Details</h2>
+    <dl class="post-facts">
+      <div>
+        <dt>🗓️ Published</dt>
+        <dd>{{ .Date.Format "Jan 2, 2006" }}</dd>
+      </div>
+      {{ with .Params.categories }}
+        <div>
+          <dt>🗂️ Categories</dt>
+          <dd>{{ delimit . ", " }}</dd>
+        </div>
+      {{ end }}
+      {{ with .Params.tags }}
+        <div>
+          <dt>🏷️ Tags</dt>
+          <dd>{{ delimit . ", " }}</dd>
+        </div>
+      {{ end }}
+    </dl>
+  </section>
+</aside>

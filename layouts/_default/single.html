@@ -1,0 +1,15 @@
+{{ define "main" }}
+  <article class="article">
+    <header class="article-header">
+      <h1>{{ .Title }}</h1>
+      {{ if eq .Section "posts" }}
+        <p class="meta">🗓️ {{ .Date.Format "January 2, 2006" }}{{ with .Params.categories }} · {{ delimit . ", " }}{{ end }}</p>
+      {{ end }}
+    </header>
+    <div class="content">
+      {{ .Content }}
+    </div>
+    {{ partial "historical-comments.html" . }}
+    {{ partial "giscus.html" . }}
+  </article>
+{{ end }}

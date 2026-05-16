@@ -1,0 +1,20 @@
+# Build output
+public/
+resources/
+
+# Migration backups (gitignored but here for safety)
+**/*.md.bak
+migration/
+
+# Content is linted by markdownlint, not prettier
+content/
+
+# Hugo templates use {{ }} syntax that vanilla prettier mangles
+layouts/
+
+# Static files copied verbatim
+static/_headers
+static/_redirects
+
+# Generated content
+.hugo_build.lock

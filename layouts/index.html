@@ -1,0 +1,10 @@
+{{ define "main" }}
+  <header class="section-heading">
+    <h1>Latest Posts</h1>
+  </header>
+  <section class="post-list" aria-label="Recent posts">
+    {{ range first 12 (where site.RegularPages "Section" "posts") }}
+      {{ partial "post-card.html" . }}
+    {{ end }}
+  </section>
+{{ end }}

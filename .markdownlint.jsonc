@@ -1,0 +1,17 @@
+{
+  // Project-wide markdownlint config.
+  // Disabled rules either don't fit a Hugo site (H1 in template, not content)
+  // or are content/style nits not worth bulk-fixing on a 48-post migration.
+  "default": true,
+  "MD001": false, // heading-increment — legacy posts sometimes skip levels
+  "MD013": false, // line-length — prose lines are intentionally long
+  "MD024": { "siblings_only": true }, // duplicate headings OK across H2 sections
+  "MD025": false, // single-h1 — our H1 lives in baseof.html, not content
+  "MD026": false, // trailing punctuation in headings — colons are fine stylistically
+  "MD033": false, // inline-html — figure galleries / asides intentionally use HTML
+  "MD036": false, // emphasis-as-heading — false positives in WP-imported prose
+  "MD041": false, // first-line-h1 — JSON front matter precedes content
+  "MD045": false, // alt-text — bulk content rewrite, do later
+  "MD059": false, // descriptive-link-text — "[here]" common in tech docs
+  "MD060": false, // table-column-style — cosmetic table alignment nits
+}

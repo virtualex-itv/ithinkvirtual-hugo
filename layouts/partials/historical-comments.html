@@ -1,0 +1,14 @@
+{{ with .Params.comments }}
+  <section class="comments" aria-label="Historical comments">
+    <h2>Historical Comments</h2>
+    {{ range . }}
+      <article class="comment">
+        <header>
+          <strong>{{ .author }}</strong>
+          <time datetime="{{ .date }}">{{ .date }}</time>
+        </header>
+        <div>{{ .content | safeHTML }}</div>
+      </article>
+    {{ end }}
+  </section>
+{{ end }}

@@ -1,0 +1,31 @@
+<article class="post-card">
+  {{ with .Params.featured_image }}
+    {{/* Resolve as a page-bundle resource if present, otherwise use the raw value
+         (lets new posts colocate the image in their leaf bundle while keeping the
+         /uploads/... paths from the WordPress migration working). */}}
+    {{ $src := . }}
+    {{ with $.Resources.GetMatch . }}
+      {{ $src = .RelPermalink }}
+    {{ end }}
+    <a class="post-card-image" href="{{ $.RelPermalink }}" aria-label="{{ $.Title }}">
+      <img src="{{ $src }}" alt="" loading="lazy">
+    </a>
+  {{ end }}
+  {{ with .Params.categories }}
+    <div class="card-categories">
+      {{ range . }}
+        <a class="category category-{{ . | urlize }}" href="{{ "/categories/" | relURL }}{{ . | urlize }}/">{{ . }}</a>
+      {{ end }}
+    </div>
+  {{ end }}
+  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+  <p class="meta">🗓️ {{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
+  <p>{{ .Summary | plainify | truncate 220 }}</p>
+  {{ with .Params.tags }}
+    <footer class="tag-row">
+      {{ range first 5 . }}
+        <a class="tag" href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>
+      {{ end }}
+    </footer>
+  {{ end }}
+</article>

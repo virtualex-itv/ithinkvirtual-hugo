@@ -1,0 +1,34 @@
+<aside class="meta-sidebar" aria-label="Site metadata">
+  {{ partial "subscribe.html" . }}
+  <section class="widget">
+    <h2>🔎 Search</h2>
+    <form class="search" action="https://www.google.com/search" method="get">
+      <input type="hidden" name="sitesearch" value="ithinkvirtual.com">
+      <input type="search" name="q" placeholder="Search posts" aria-label="Search posts">
+    </form>
+  </section>
+  <section class="widget">
+    <h2>🗂️ Categories</h2>
+    <div class="chip-cloud">
+      {{ range site.Taxonomies.categories.ByCount }}
+        <a href="{{ .Page.RelPermalink }}">{{ .Page.Title }} <span>{{ .Count }}</span></a>
+      {{ end }}
+    </div>
+  </section>
+  <section class="widget">
+    <h2>🏷️ Tags</h2>
+    <div class="chip-cloud">
+      {{ range first 18 site.Taxonomies.tags.ByCount }}
+        <a href="{{ .Page.RelPermalink }}">#{{ .Page.Title }}</a>
+      {{ end }}
+    </div>
+  </section>
+  <section class="widget">
+    <h2>🗓️ Archives</h2>
+    <ol class="archive-list">
+      {{ range first 8 ((where site.RegularPages "Section" "posts").GroupByDate "2006") }}
+        <li><a href="{{ (printf "/%s/" .Key) | relURL }}">{{ .Key }}</a><span>{{ len .Pages }}</span></li>
+      {{ end }}
+    </ol>
+  </section>
+</aside>

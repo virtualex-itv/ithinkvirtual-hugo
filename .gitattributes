@@ -1,0 +1,46 @@
+# Auto-detect text files and normalise line endings to LF in the repo.
+# Working copy keeps native line endings (CRLF on Windows, LF elsewhere).
+* text=auto eol=lf
+
+# Force LF for files where the tool reads them directly
+*.sh   text eol=lf
+*.py   text eol=lf
+*.toml text eol=lf
+*.yml  text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.md   text eol=lf
+*.css  text eol=lf
+*.js   text eol=lf
+*.html text eol=lf
+
+# Force CRLF for Windows-only scripts
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary — never normalise line endings
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.gif  binary
+*.webp binary
+*.ico  binary
+*.bmp  binary
+*.tif  binary
+*.tiff binary
+*.pdf  binary
+*.zip  binary
+*.tar  binary
+*.tar.gz binary
+*.gz   binary
+*.7z   binary
+*.woff binary
+*.woff2 binary
+*.ttf  binary
+*.otf  binary
+*.eot  binary
+*.mp4  binary
+*.mov  binary
+*.mp3  binary
+*.wav  binary

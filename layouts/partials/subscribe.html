@@ -1,0 +1,18 @@
+{{ $feed := printf "%sindex.xml" site.BaseURL }}
+<section class="widget subscribe-widget">
+  <h2>📬 Subscribe</h2>
+  <p class="subscribe-blurb">Never miss a post.</p>
+  <div class="subscribe-actions">
+    <a class="subscribe-btn subscribe-rss" href="{{ "/index.xml" | relURL }}" title="Open RSS feed">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5.1 16.9a2.1 2.1 0 1 1 0 4.2 2.1 2.1 0 0 1 0-4.2ZM3 9.1a11.9 11.9 0 0 1 11.9 11.9h-3.1A8.8 8.8 0 0 0 3 12.2V9.1Zm0-6.2c10 0 18.1 8.1 18.1 18.1H18A15 15 0 0 0 3 6V2.9Z"/></svg>
+      RSS Feed
+    </a>
+    <button class="subscribe-btn subscribe-copy" type="button" data-copy-feed="{{ $feed }}" title="Copy feed URL to clipboard">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16 1H4a2 2 0 0 0-2 2v14h2V3h12V1Zm3 4H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2Zm0 16H8V7h11v14Z"/></svg>
+      <span class="subscribe-copy-label">Copy Feed URL</span>
+    </button>
+  </div>
+  <p class="subscribe-hint">
+    Prefer email? Paste the feed URL into <a href="https://follow.it/" target="_blank" rel="noopener">Follow.it</a> or <a href="https://blogtrottr.com/" target="_blank" rel="noopener">Blogtrottr</a>.
+  </p>
+</section>

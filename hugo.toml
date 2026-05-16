@@ -1,0 +1,79 @@
+baseURL = 'https://ithinkvirtual.com/'
+languageCode = 'en-us'
+title = 'iThinkVirtual™'
+timeZone = 'America/New_York'
+enableRobotsTXT = true
+summaryLength = 28
+ignoreFiles = ['\.bak$']
+
+[params]
+description = 'Virtualization. Tech Talk. Rambling.'
+author = 'Alex Lopez'
+giscusRepo = 'virtualex-itv/ithinkvirtual-hugo'
+giscusRepoId = 'R_kgDOSe6w-g'
+giscusCategory = 'Comments'
+giscusCategoryId = 'DIC_kwDOSe6w-s4C9KO5'
+
+[[params.social]]
+name = 'Email'
+url = 'mailto:info@ithinkvirtual.com'
+icon = 'email'
+
+[[params.social]]
+name = 'X'
+url = 'https://x.com/iVirtuAlex'
+icon = 'x'
+
+[[params.social]]
+name = 'Mastodon'
+url = 'https://vmst.io/@virtualex'
+icon = 'mastodon'
+
+[[params.social]]
+name = 'GitHub'
+url = 'https://github.com/virtualex-itv'
+icon = 'github'
+
+[[params.social]]
+name = 'LinkedIn'
+url = 'https://www.linkedin.com/in/alopez27'
+icon = 'linkedin'
+
+[permalinks]
+posts = '/posts/:slug/'
+
+[permalinks.term]
+years = '/:slug/'
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[taxonomies]
+category = 'categories'
+tag = 'tags'
+year = 'years'
+
+[outputs]
+home = ['HTML', 'RSS']
+
+[menu]
+[[menu.main]]
+name = 'Posts'
+url = '/posts/'
+weight = 10
+[[menu.main]]
+name = 'Categories'
+url = '/categories/'
+weight = 20
+[[menu.main]]
+name = 'Tags'
+url = '/tags/'
+weight = 30
+[[menu.main]]
+name = 'Videos'
+url = '/videos/'
+weight = 40
+[[menu.main]]
+name = 'About'
+url = '/about/'
+weight = 50
