@@ -4,11 +4,15 @@
          (lets new posts colocate the image in their leaf bundle while keeping the
          /uploads/... paths from the WordPress migration working). */}}
     {{ $src := . }}
+    {{ $w := 0 }}
+    {{ $h := 0 }}
     {{ with $.Resources.GetMatch . }}
       {{ $src = .RelPermalink }}
+      {{ $w = .Width }}
+      {{ $h = .Height }}
     {{ end }}
     <a class="post-card-image" href="{{ $.RelPermalink }}" aria-label="{{ $.Title }}">
-      <img src="{{ $src }}" alt="" loading="lazy">
+      <img src="{{ $src }}" alt="" loading="lazy"{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}>
     </a>
   {{ end }}
   {{ with .Params.categories }}
