@@ -29,7 +29,7 @@
   "comments": []
 }
 
-Welcome back, friends!  It's been a bit since I dropped a home lab post, but I've been heads-down on something I'm genuinely excited to share.  With the release of [Veeam Backup & Replication 13](https://www.veeam.com/products/veeam-data-platform.html) (VBR 13 for short), I took the opportunity to rebuild the backup setup in my home lab from the ground up and stand up a proper hardened, immutable repository for my VMware workloads.
+It's been a minute since my last home lab post, but I've been heads-down on something I'm genuinely excited to share.  With the release of [Veeam Backup & Replication 13](https://www.veeam.com/products/veeam-data-platform.html) (VBR 13 for short), I took the opportunity to rebuild the backup setup in my home lab from the ground up and stand up a proper hardened, immutable repository for my VMware workloads.
 
 This post walks through the exact build I landed on, including the design tradeoffs along the way, the commands I ran, and a few pitfalls I hit so you don't have to.  Let's get to it!
 
