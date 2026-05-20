@@ -250,7 +250,7 @@ sudo chown veeamrepo:veeamrepo /veeam/repo01/backups
 sudo chmod 700 /veeam/repo01/backups
 ```
 
-<aside class="info-block"><p>We'll strip sudo back off after the repo is registered in Veeam.</p></aside>
+<aside class="info-block"><p>The sudo grant above is temporary.  We'll strip it back off at the end of Phase 8, once the repo is registered in Veeam.</p></aside>
 
 ## Phase 8 - Add the hardened repository in Veeam
 
@@ -292,13 +292,15 @@ In v13, this is a two-step flow: first we add `vbhr` as a managed Linux server, 
    - Make recent backups immutable for: **7 days** (raise to 14 once you've got a sense of your change rate)
 8. Mount Server: leave the default (the VBR appliance) → Apply → Finish.
 
-Once the repo is online, harden `veeamrepo` back down:
+Once the repo is online, it's time to strip sudo back off `veeamrepo` like I mentioned back in Phase 7.  Veeam only needed the elevated rights to deploy the transport service, and the single-use credential is already discarded, so the account no longer needs sudo at all.  Back on `vbhr`, run:
 
 ```bash
 sudo deluser veeamrepo sudo
 sudo passwd -l veeamrepo
 groups veeamrepo                      # must NOT list sudo
 ```
+
+That removes `veeamrepo` from the sudo group and locks its password, leaving an account that can own the repo files but can't be used to log in or escalate.  This is the hardened end-state we've been building toward.
 
 ## Phase 9 - Add vCenter to Veeam
 
