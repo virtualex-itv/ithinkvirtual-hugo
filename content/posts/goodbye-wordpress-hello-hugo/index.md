@@ -71,6 +71,6 @@ More content, of course!  Going forward, most of my VMware focus has shifted ove
 
 Outside of VCF, I've also got my eye on writing about [Veeam Backup and Recovery](https://www.veeam.com/products/virtual/vmware-backup-recovery.html), plus some [AI](https://en.wikipedia.org/wiki/Artificial_intelligence) [MCP (Model Context Protocol)](https://modelcontextprotocol.io/docs/getting-started/intro) and other tooling I've been playing around with lately.  And of course, more home lab content as it continues to evolve!
 
-Thanks as always for stopping by and for sticking around all these years.  Here's to the next 10!  Until next time!
+Thanks as always for stopping by and for sticking around all these years.  Here's to the next 10!
 
 -virtualex-

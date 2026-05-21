@@ -591,7 +591,7 @@ A few things I'd flag as worth your attention going forward:
 - Periodically test restores.  Backups you don't restore from are just expensive disk usage.
 - Keep the configuration backup encryption password somewhere you'll actually find it in a disaster.
 
-Thanks as always for stopping by and reading along.  If you ended up building something similar, drop a note in the comments and let me know how it landed for you.  Until next time!
+Thanks as always for stopping by and reading along.  If you ended up building something similar, drop a note in the comments and let me know how it landed for you.  Now go test those restores!
 
 ## References
 
