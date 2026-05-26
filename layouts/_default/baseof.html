@@ -25,6 +25,7 @@
     {{ with .OutputFormats.Get "RSS" }}
       <link rel="alternate" type="application/rss+xml" href="{{ .RelPermalink }}" title="{{ site.Title }}">
     {{ end }}
+    {{ block "head-extra" . }}{{ end }}
   </head>
   <body>
     <div class="site-shell">

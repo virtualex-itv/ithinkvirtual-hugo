@@ -1,0 +1,25 @@
+{{/* Emits a <link rel="preload"> for the given page's featured image so the
+     LCP element on listing pages starts fetching as early as possible. */}}
+{{ with .Params.featured_image }}
+  {{ $href := "" }}
+  {{ $type := "" }}
+  {{ with $.Resources.GetMatch . }}
+    {{ if eq .ResourceType "image" }}
+      {{ $img := . }}
+      {{ if gt .Width 1440 }}
+        {{ $img = .Process "resize 1440x webp q80" }}
+      {{ else }}
+        {{ $img = .Process "webp q82" }}
+      {{ end }}
+      {{ $href = $img.RelPermalink }}
+      {{ $type = "image/webp" }}
+    {{ else }}
+      {{ $href = .RelPermalink }}
+    {{ end }}
+  {{ else }}
+    {{ $href = . }}
+  {{ end }}
+  {{ with $href }}
+    <link rel="preload" as="image" href="{{ . }}"{{ with $type }} type="{{ . }}"{{ end }} fetchpriority="high">
+  {{ end }}
+{{ end }}

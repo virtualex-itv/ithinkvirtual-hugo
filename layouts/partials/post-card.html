@@ -1,31 +1,54 @@
+{{/* Accepts either a Page (legacy) or a dict {page, lcp}.
+     `lcp` is the RelPermalink of the listing page's LCP candidate. */}}
+{{ $page := . }}
+{{ $lcpRef := "" }}
+{{ if reflect.IsMap . }}
+  {{ $page = .page }}
+  {{ $lcpRef = .lcp }}
+{{ end }}
+{{ $isLCP := and $lcpRef (eq $page.RelPermalink $lcpRef) }}
 <article class="post-card">
-  {{ with .Params.featured_image }}
+  {{ with $page.Params.featured_image }}
     {{/* Resolve as a page-bundle resource if present, otherwise use the raw value
          (lets new posts colocate the image in their leaf bundle while keeping the
          /uploads/... paths from the WordPress migration working). */}}
     {{ $src := . }}
     {{ $w := 0 }}
     {{ $h := 0 }}
-    {{ with $.Resources.GetMatch . }}
+    {{ with $page.Resources.GetMatch . }}
       {{ $src = .RelPermalink }}
       {{ $w = .Width }}
       {{ $h = .Height }}
+      {{ if eq .ResourceType "image" }}
+        {{ $img := . }}
+        {{ if gt .Width 1440 }}
+          {{ $img = .Process "resize 1440x webp q80" }}
+        {{ else }}
+          {{ $img = .Process "webp q82" }}
+        {{ end }}
+        {{ $src = $img.RelPermalink }}
+        {{ $w = $img.Width }}
+        {{ $h = $img.Height }}
+      {{ end }}
     {{ end }}
-    <a class="post-card-image" href="{{ $.RelPermalink }}" aria-label="{{ $.Title }}">
-      <img src="{{ $src }}" alt="" loading="lazy"{{ if $w }} width="{{ $w }}" height="{{ $h }}"{{ end }}>
+    <a class="post-card-image" href="{{ $page.RelPermalink }}" aria-label="{{ $page.Title }}">
+      <img src="{{ $src }}" alt=""
+        {{ if $isLCP }}loading="eager" fetchpriority="high"{{ else }}loading="lazy"{{ end }}
+        decoding="async"
+        {{ if $w }}width="{{ $w }}" height="{{ $h }}"{{ end }}>
     </a>
   {{ end }}
-  {{ with .Params.categories }}
+  {{ with $page.Params.categories }}
     <div class="card-categories">
       {{ range . }}
         <a class="category category-{{ . | urlize }}" href="{{ "/categories/" | relURL }}{{ . | urlize }}/">{{ . }}</a>
       {{ end }}
     </div>
   {{ end }}
-  <h2><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
-  <p class="meta">🗓️ {{ .Date.Format "Jan 2, 2006" }} · {{ .ReadingTime }} min read</p>
-  <p>{{ .Summary | plainify | truncate 220 }}</p>
-  {{ with .Params.tags }}
+  <h2><a href="{{ $page.RelPermalink }}">{{ $page.Title }}</a></h2>
+  <p class="meta">🗓️ {{ $page.Date.Format "Jan 2, 2006" }} · {{ $page.ReadingTime }} min read</p>
+  <p>{{ $page.Summary | plainify | truncate 220 }}</p>
+  {{ with $page.Params.tags }}
     <footer class="tag-row">
       {{ range first 5 . }}
         <a class="tag" href="{{ "/tags/" | relURL }}{{ . | urlize }}/">#{{ . }}</a>
