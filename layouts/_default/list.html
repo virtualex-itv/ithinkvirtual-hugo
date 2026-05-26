@@ -1,12 +1,21 @@
 {{ define "main" }}
+  {{ $lcp := partial "lcp-page.html" .Pages }}
+  {{ $lcpRef := "" }}
+  {{ with $lcp }}{{ $lcpRef = .RelPermalink }}{{ end }}
   <header class="section-heading">
     <h1>{{ .Title }}</h1>
   </header>
   <section class="post-list">
     {{ range .Pages }}
-      {{ partial "post-card.html" . }}
+      {{ partial "post-card.html" (dict "page" . "lcp" $lcpRef) }}
     {{ else }}
       <p>No content found.</p>
     {{ end }}
   </section>
+{{ end }}
+
+{{ define "head-extra" }}
+  {{ with partial "lcp-page.html" .Pages }}
+    {{ partial "post-card-preload.html" . }}
+  {{ end }}
 {{ end }}

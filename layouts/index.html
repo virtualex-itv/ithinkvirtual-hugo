@@ -1,10 +1,21 @@
 {{ define "main" }}
+  {{ $pages := first 12 (where site.RegularPages "Section" "posts") }}
+  {{ $lcp := partial "lcp-page.html" $pages }}
+  {{ $lcpRef := "" }}
+  {{ with $lcp }}{{ $lcpRef = .RelPermalink }}{{ end }}
   <header class="section-heading">
     <h1>Latest Posts</h1>
   </header>
   <section class="post-list" aria-label="Recent posts">
-    {{ range first 12 (where site.RegularPages "Section" "posts") }}
-      {{ partial "post-card.html" . }}
+    {{ range $pages }}
+      {{ partial "post-card.html" (dict "page" . "lcp" $lcpRef) }}
     {{ end }}
   </section>
+{{ end }}
+
+{{ define "head-extra" }}
+  {{ $pages := first 12 (where site.RegularPages "Section" "posts") }}
+  {{ with partial "lcp-page.html" $pages }}
+    {{ partial "post-card-preload.html" . }}
+  {{ end }}
 {{ end }}
