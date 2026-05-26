@@ -1,0 +1,8 @@
+{{- /* Markdown image render hook. The first image on a page is almost always
+       the LCP element on article pages, so promote it to eager + high priority.
+       All other images stay lazy. */ -}}
+{{- $isLCP := eq .Ordinal 0 -}}
+<img src="{{ .Destination | safeURL }}" alt="{{ .PlainText }}"
+  {{- with .Title }} title="{{ . }}"{{ end }}
+  {{- if $isLCP }} loading="eager" fetchpriority="high"{{ else }} loading="lazy"{{ end }}
+  decoding="async">
