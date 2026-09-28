@@ -1,7 +1,7 @@
 {
   "title": "Nested vSphere Home Lab - Part 2 - Active Directory & Certificate Authority",
   "date": "2023-04-23T21:05:13",
-  "lastmod": "2023-04-28T12:49:08",
+  "lastmod": "2026-09-27T22:30:00",
   "slug": "nested-vsphere-home-lab-part-2-active-directory-certificate-authority",
   "url": "/posts/nested-vsphere-home-lab-part-2-active-directory-certificate-authority/",
   "draft": false,
@@ -43,7 +43,7 @@ Next, I will cover the way I like to quickly configure my Active Directory Serve
 ![](/uploads/2023/04/2023-03-24_14-36-29.png)
 <aside class="info-block"><p>The following section(s) assume that you have a working Windows Server virtual machine as creating a Windows Server VM is out-of-scope for this post, so I will not cover that.</p></aside>
 
-As mentioned, since I typically use Core versions of Windows Server, thus it is managed via PowerShell commands so to set up my server as a Domain Controller, I'll run the following from an elevate PowerShell session.
+As mentioned, since I typically use Core versions of Windows Server, thus it is managed via PowerShell commands so to set up my server as a Domain Controller, I'll run the following from an elevated PowerShell session.
 
 ```powershell
 ###1st DC###
@@ -110,7 +110,7 @@ Get-DnsClientServerAddress
 # Set the correct InterfaceIndex from previous command
 Set-DnsClientServerAddress -InterfaceIndex 5 -ServerAddresses ("10.100.1.10","127.0.0.1") -Verbose
 
-Install-ADDSDomainController -NoGlobalCatalog:$false -CreateDnsDelegation:$false -Credential (Get-Credential "LAB\Administrator") -CriticalReplicationOnly:$false -DatabasePath "C:\Windows\NTDS" -DomainName "demo.lab" -InstallDns:$true -LogPath "C:\Windows\NTDS" -NoRebootOnCompletion:$true -SiteName "Default-First-Site-Name" -ReplicationSourceDC "dc1.demo.lab" -SysvolPath "C:\Windows\SYSVOL" -SafeModeAdministratorPassword $Password -Force:$true -Verbose
+Install-ADDSDomainController -NoGlobalCatalog:$false -CreateDnsDelegation:$false -Credential (Get-Credential "DEMO\Administrator") -CriticalReplicationOnly:$false -DatabasePath "C:\Windows\NTDS" -DomainName "demo.lab" -InstallDns:$true -LogPath "C:\Windows\NTDS" -NoRebootOnCompletion:$true -SiteName "Default-First-Site-Name" -ReplicationSourceDC "dc1.demo.lab" -SysvolPath "C:\Windows\SYSVOL" -SafeModeAdministratorPassword $Password -Force:$true -Verbose
 
 # Install DHCP Services
 
@@ -135,7 +135,7 @@ Set-Itemproperty -path 'HKLM:SYSTEM\CurrentControlSet\Services\Netlogon\Paramete
 
 ```
 
-Then switch back to DC1 and run the following so set its DNS configuration to point to DC2 as the primary and itself as the secondary, this way bother servers are pointing to the opposite server as it's primary:
+Then switch back to DC1 and run the following to set its DNS configuration to point to DC2 as the primary and itself as the secondary, this way both servers are pointing to the opposite server as it's primary:
 
 ```powershell
 ###1st DC###
@@ -184,7 +184,7 @@ Install-WindowsFeature Web-Mgmt-Service -IncludeManagementTools -Verbose
 # Install ADCS
 Install-WindowsFeature Adcs-Cert-Authority -IncludeManagementTools -Verbose
 
-$CA_Name = "demo-lab-ca"
+$CA_Name = "demo.lab-ca"
 $CP_Name = "RSA#Microsoft Software Key Storage Provider"
 Install-AdcsCertificationAuthority -CACommonName $CA_Name -CAType EnterpriseRootCa -CryptoProviderName $CP_Name -Credential (Get-Credential "DEMO\Administrator") -KeyLength 2048 -HashAlgorithmName SHA256 -ValidityPeriod Years -ValidityPeriodUnits 10 -Force -Verbose
 
@@ -192,6 +192,21 @@ Install-WindowsFeature ADCS-Web-Enrollment -IncludeManagementTools -Verbose
 
 Install-AdcsWebEnrollment -Force -Verbose
 ```
+
+<aside class="info-block"><p><strong>Update (September 2026):</strong> By default, a new Enterprise CA only stamps <code>ldap://</code> CRL (CDP) and CA certificate (AIA) locations into the certificates it issues. Domain-joined machines are fine with that, but anything that isn't domain-joined (a NAS, SDDC Manager, appliances) can't fetch the CA certificate or check revocation. The HTTP locations are already in the CA's configuration, just switched off, so enabling them is a matter of flipping two flags.</p></aside>
+
+```powershell
+# Enable the HTTP CDP and AIA locations that the CA ships with (disabled by default)
+$cfg = "HKLM:\SYSTEM\CurrentControlSet\Services\CertSvc\Configuration\$CA_Name"
+$crl = (Get-ItemProperty $cfg).CRLPublicationURLs    -replace '^\d+:(http://%1/CertEnroll/%3%8%9\.crl)$', '6:$1'
+$aia = (Get-ItemProperty $cfg).CACertPublicationURLs -replace '^\d+:(http://%1/CertEnroll/%1_%3%4\.crt)$', '2:$1'
+Set-ItemProperty $cfg -Name CRLPublicationURLs    -Value $crl -Type MultiString
+Set-ItemProperty $cfg -Name CACertPublicationURLs -Value $aia -Type MultiString
+Restart-Service certsvc
+certutil -crl
+```
+
+I edit the registry directly rather than using `certutil -setreg` because these values are full of `%` tokens that are easy to mangle, and `-setreg` replaces the whole list. Only certificates issued after this change carry the HTTP locations.
 
 At this point, if you navigate to the URL of the CA server at `http://[IP or FQDN]/certsrv` , you should be prompted to authenticate and see the following page(s).
 
@@ -210,7 +225,36 @@ To create a GPO, open the Group Policy Management utility. I already had the adm
 
 This at least gets us started so we can hop back in and configure additional users, groups, GPOs, DNS record, DHCP Scopes, etc. as needed later on, but we're not done just yet! I like to configure a secure connection to the Web Enrollment Server URL so to do so, I'll need to configure that in IIS.
 
-Open up **IIS Manager** on the CA Server, navigate to the **Default Web Site** and click on **Bindings**, then click **Add**. Set the **Type** to **https**, then select the **SSL certificate** that is named after the CA server from the dropdown menu, in my case **dc.demo.lab** and click **OK**, then **Close**. Next, **CertSrv**, then double-click **SSL Settings**. Enable the **Require SSL** checkbox, then click **Apply**. Afterwards, navigate again to the Web Enrollment Server URL, this time using `https://[FQDN]/certsrv`, Authenticate if asked to do so, and now we can see that we have a certificate securing our connection.
+First, I request a **Web Server** certificate for the CA's names. Originally I just picked the domain controller's own certificate in IIS, and it came back to bite me: that certificate was replaced when auto-enrollment renewed it, IIS stayed bound to the old one, and HTTPS web enrollment quietly broke when it expired. A dedicated Web Server certificate avoids that. Run this as the domain Administrator. Requesting it straight into the machine store with `Get-Certificate` runs as the computer account, which the Web Server template doesn't allow to enroll, so I use `certreq` instead:
+
+```powershell
+$inf = @'
+[Version]
+Signature="$Windows NT$"
+[NewRequest]
+Subject = "CN=dc.demo.lab"
+KeyLength = 2048
+KeySpec = 1
+KeyUsage = 0xA0
+MachineKeySet = TRUE
+ProviderName = "Microsoft RSA SChannel Cryptographic Provider"
+RequestType = PKCS10
+HashAlgorithm = sha256
+[EnhancedKeyUsageExtension]
+OID=1.3.6.1.5.5.7.3.1
+[Extensions]
+2.5.29.17 = "{text}"
+_continue_ = "dns=dc.demo.lab&"
+_continue_ = "dns=ca.demo.lab&"
+'@
+New-Item -ItemType Directory -Force -Path C:\temp | Out-Null
+$inf | Set-Content C:\temp\iis.inf -Encoding ASCII
+certreq -new C:\temp\iis.inf C:\temp\iis.csr
+certreq -submit -attrib "CertificateTemplate:WebServer" -config "dc.demo.lab\demo.lab-ca" C:\temp\iis.csr C:\temp\iis.cer
+certreq -accept -machine C:\temp\iis.cer
+```
+
+Open up **IIS Manager** on the CA Server, navigate to the **Default Web Site** and click on **Bindings**, then click **Add**. Set the **Type** to **https**, then select the **Web Server certificate** you just requested (issued to **dc.demo.lab**; check the expiry date to tell it apart from the domain controller's own certificates) and click **OK**, then **Close**. Put a reminder in for its renewal, as a Web Server certificate doesn't renew itself (2 years with the default template). Next, **CertSrv**, then double-click **SSL Settings**. Enable the **Require SSL** checkbox, then click **Apply**. Afterwards, navigate again to the Web Enrollment Server URL, this time using `https://[FQDN]/certsrv`, Authenticate if asked to do so, and now we can see that we have a certificate securing our connection.
 
 ![](/uploads/2023/04/2023-04-26_17-50-58.png)
 ![](/uploads/2023/04/2023-04-26_17-51-45.png)
@@ -231,7 +275,7 @@ Then, install OpenSSL with the following command:
 ```powershell
 # Optional
 choco feature enable -n allowGlobalConfirmation
-choco feature enalbe -n useRememberedArgumentsForUpgrades
+choco feature enable -n useRememberedArgumentsForUpgrades
 
 # Install OpenSSL
 choco install openssl
@@ -241,6 +285,42 @@ choco install inetmgr
 ```
 
 Next, I will create a certificate template which will be used to sign CSRs with later on by following the instructions in VMware KB Article [2112009](https://kb.vmware.com/s/article/2112009). And to round things off, the last thing I will do is enable certificate auto-enrollment following the instructions in this [guide](https://learn.microsoft.com/en-us/windows-server/networking/core-network-guide/cncg/server-certs/configure-server-certificate-autoenrollment).
+
+One thing that guide doesn't cover is the domain controllers themselves. The DC's LDAPS certificate expires after a year, and unless auto-enrollment also applies to the **Default Domain Controllers Policy**, nothing renews it. While I'm at it, I make the **Kerberos Authentication** template supersede the older **Domain Controller Authentication** and **Domain Controller** templates and stop issuing those two, so each DC ends up with exactly one certificate that LDAPS can use:
+
+```powershell
+# Auto-enrollment (enroll, renew, update) for the domain controllers
+$gpo = Get-GPO -Name 'Default Domain Controllers Policy'
+$key = 'HKLM\SOFTWARE\Policies\Microsoft\Cryptography\AutoEnrollment'
+Set-GPRegistryValue -Guid $gpo.Id -Key $key -ValueName AEPolicy -Type DWord -Value 7
+Set-GPRegistryValue -Guid $gpo.Id -Key $key -ValueName OfflineExpirationPercent -Type DWord -Value 10
+Set-GPRegistryValue -Guid $gpo.Id -Key $key -ValueName OfflineExpirationStoreNames -Type String -Value 'MY'
+
+# Kerberos Authentication supersedes the older DC templates
+$root = ([ADSI]'LDAP://RootDSE').configurationNamingContext
+$krb  = [ADSI]"LDAP://CN=KerberosAuthentication,CN=Certificate Templates,CN=Public Key Services,CN=Services,$root"
+$krb.Properties['msPKI-Supersede-Templates'].Clear()
+[void]$krb.Properties['msPKI-Supersede-Templates'].Add('DomainControllerAuthentication')
+[void]$krb.Properties['msPKI-Supersede-Templates'].Add('DomainController')
+$krb.Properties['msPKI-Template-Minor-Revision'][0] = [int]$krb.Properties['msPKI-Template-Minor-Revision'][0] + 1
+$krb.CommitChanges()
+
+# Stop issuing the superseded templates
+Remove-CATemplate -Name DomainControllerAuthentication -Force
+Remove-CATemplate -Name DomainController -Force
+
+# Apply and trigger auto-enrollment
+gpupdate /target:computer /force
+certutil -pulse
+```
+
+After a minute, the DC's personal store should hold a **Kerberos Authentication** certificate (plus **Directory Email Replication**), and the old DC certificates will have been archived. You can confirm which certificate LDAPS is serving from any machine with OpenSSL:
+
+```powershell
+openssl s_client -connect dc.demo.lab:636 -servername dc.demo.lab | openssl x509 -noout -subject -dates -ext subjectAltName
+```
+
+If anything **pins** the DC's LDAPS certificate, such as a vCenter Server identity source using Active Directory over LDAPS, it has to be updated every time the DC renews. In vCenter, upload the CA's root certificate along with the DC certificates, and make a note to check logins after each renewal.
 
 In the next post, I will cover how to deploy the nested ESXi VMs and vCenter Server.
 
