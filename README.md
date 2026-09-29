@@ -76,7 +76,7 @@ Live site runs on [Cloudflare Pages](https://pages.cloudflare.com/), auto-deploy
 
 - Build command: `hugo --gc --minify`
 - Output directory: `public`
-- Environment variable: `HUGO_VERSION=0.161.0`
+- Hugo version: `HUGO_VERSION=0.161.0`, set under `[vars]` in [`wrangler.toml`](wrangler.toml). Because `wrangler.toml` is the source of truth for the project, a `HUGO_VERSION` set only in the Cloudflare dashboard is ignored and the build falls back to Hugo 0.147.7.
 
 [`static/_headers`](static/_headers) and [`static/_redirects`](static/_redirects) are processed by Cloudflare's edge.
 
