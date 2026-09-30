@@ -26,7 +26,7 @@ icon = 'x'
 
 [[params.social]]
 name = 'Mastodon'
-url = 'https://vmst.io/@virtualex'
+url = 'https://hachyderm.io/@virtualex'
 icon = 'mastodon'
 
 [[params.social]]
