@@ -1,7 +1,7 @@
 {
   "title": "Before You Upgrade to VCF 9.1.x: Five Readiness Gates",
   "date": "2026-09-29T12:00:00-04:00",
-  "lastmod": "2026-09-29T12:00:00-04:00",
+  "lastmod": "2026-10-01T13:19:32-04:00",
   "slug": "vcf-9-1-upgrade-readiness-five-gates",
   "url": "/posts/vcf-9-1-upgrade-readiness-five-gates/",
   "draft": false,
@@ -31,15 +31,15 @@ This is the checklist I'd want in front of anyone booking a maintenance window f
 
 The reason this deserves a checklist is that 9.1 changes more than version numbers.  Lifecycle management for VCF Operations, Operations for Logs, Operations for Networks, VCF Automation, and the Identity Broker moves to the new fleet lifecycle and SDDC lifecycle components, and during the VCF Operations upgrade the process migrates your component inventory, certificates, and service accounts and then decommissions the fleet management appliance for you ([Upgrading to VMware Cloud Foundation 9.1.x](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/upgrading-cloud-foundation.html)).  That's a new management plane, not a patch.
 
-<aside class="info-block"><p>Everything below was checked against the Broadcom TechDocs pages as they stood on September 29th, 2026.  Details like IP counts and version gates move between releases, so recheck the pages for your exact target before you commit to a plan.</p></aside>
-
 ## Gate 1: Prove the upgrade path
 
 "9 is newer than 5" is not an upgrade plan.  VCF enforces forward-only upgrade validation by release date, and it applies that rule to every component in your source bill of materials, not just the VCF version on the label.  The documentation's own example makes the point: VCF 5.2.4, released May 27th, cannot upgrade to VCF 9.1.0, released May 11th, but it can upgrade to VCF 9.1.1, released September 3rd.  The same goes for the vCenter and ESX builds inside that 5.2.4 BoM.  One more consequence worth knowing is that following the current guidance takes you straight to 9.1.1 without installing 9.1.0 first and patching afterward.
 
 So the first deliverable is a short inventory: every component with its exact version and build, the target version and build, the upgrade-path and interoperability references you checked for that combination (the [Broadcom Interoperability Matrix](https://interopmatrix.broadcom.com/Upgrade?productId=851) is the one the docs point to), and the date you checked them.  The [VCF Upgrade Planning Tool](https://blogs.vmware.com/cloud-foundation/2026/05/28/announcing-the-vmware-cloud-foundation-9-1-upgrade-planning-tool) is a great place to start, since it takes your deployed products and versions and generates a phased plan with resource and networking requirements, pitfalls, and documentation links, and you can export the whole thing or individual phases to PDF.  Use it to structure the work, then validate it against the documentation for the exact target you intend to deploy.
 
-**Pass condition:** you can explain why the path is supported for this specific environment without pointing at a generic version chart.
+One more check if your source isn't already on 9.x.  Coming from VCF 5.x, or from a vSphere environment you plan to converge, two things in your current setup can stop you cold.  First, vSphere Lifecycle Manager baselines aren't supported in VCF 9.0 or later, so every cluster has to be managed with vLCM images before you upgrade to ESX 9, and the docs have you start that transition as soon as SDDC Manager reaches 9 ([baseline to image transition](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/upgrading-cloud-foundation/upgrade-the-management-domain-to-vmware-cloud-foundation-5-2/vlcm-baseline-to-vlcm-image-cluster-transition-.html)).  Second, Enhanced Linked Mode is deprecated in VCF 9.0.  It doesn't block an upgrade from 5.x by itself, but you have to deactivate it for all of your vCenter instances through the SDDC Manager API before you can use VCF Single Sign-On or vCenter linking ([deactivating ELM](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-0/fleet-management/what-is/points-to-consider-while-setting-up-vmware-cloud-foundation-sso/deactivate-enhanced-link-mode--elm--for-upgraded-vmware-cloud-foundation-vcenters.html)), and pulling vCenters out of ELM outside of SDDC Manager leaves drift that blocks some workflows until you reconcile it.  If you're converging a vSphere environment instead, ELM isn't supported at all, so you'd upgrade the vCenters to 9.1 and break ELM first, and that workaround only applies when there are no existing NSX registrations ([supported and unsupported configurations](https://techdocs.broadcom.com/us/en/vmware-cis/vcf/vcf-9-0-and-later/9-1/deployment/converging-your-existing-vsphere-infrastructure-to-a-vcf-or-vvf-platform-/supported-and-not-supported-configurations.html)).
+
+**Pass condition:** you can explain why the path is supported for this specific environment without pointing at a generic version chart, and if you're coming from 5.x or converging vSphere, every cluster is on vLCM images and ELM has been dealt with.
 
 ## Gate 2: Treat the management network as a deployment dependency
 
