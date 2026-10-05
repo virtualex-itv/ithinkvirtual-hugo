@@ -48,6 +48,9 @@ years = '/:slug/'
 [markup.goldmark.renderer]
 unsafe = true
 
+[markup.highlight]
+style = 'onedark'
+
 [taxonomies]
 category = 'categories'
 tag = 'tags'

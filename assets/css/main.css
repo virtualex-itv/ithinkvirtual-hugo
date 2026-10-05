@@ -97,6 +97,11 @@ pre {
   padding: 1rem;
   border: 1px solid var(--line);
 }
+pre code {
+  background: transparent;
+  padding: 0;
+  border-radius: 0;
+}
 
 .site-shell {
   display: grid;
