@@ -133,6 +133,8 @@
 
   function openLightbox(image) {
     currentIndex = images.indexOf(image);
+    overlay.classList.remove("is-zoomed");
+    overlay.scrollTo(0, 0);
     const hasMany = images.length > 1;
     prevButton.hidden = !hasMany;
     nextButton.hidden = !hasMany;
@@ -156,7 +158,7 @@
   }
 
   function closeLightbox() {
-    overlay.classList.remove("is-open");
+    overlay.classList.remove("is-open", "is-zoomed");
     overlay.setAttribute("aria-hidden", "true");
     document.body.classList.remove("has-lightbox");
     lightboxImage.removeAttribute("src");
@@ -203,6 +205,17 @@
     const dy = touch.clientY - touchStartY;
     if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
   }, { passive: true });
+
+  // Click the image to toggle between fit-to-screen and full size (scroll or drag to pan).
+  lightboxImage.addEventListener("click", () => {
+    const zoomed = overlay.classList.toggle("is-zoomed");
+    if (zoomed) {
+      overlay.scrollLeft = (overlay.scrollWidth - overlay.clientWidth) / 2;
+      overlay.scrollTop = 0;
+    } else {
+      overlay.scrollTo(0, 0);
+    }
+  });
 
   closeButton.addEventListener("click", closeLightbox);
   prevButton.addEventListener("click", () => step(-1));

@@ -673,8 +673,7 @@ blockquote.comment-block {
   inset: 0;
   z-index: 1000;
   display: none;
-  align-items: center;
-  justify-content: center;
+  overflow: auto;
   padding: 28px;
   background: rgba(7, 10, 18, 0.86);
 }
@@ -684,12 +683,19 @@ blockquote.comment-block {
 }
 
 .image-lightbox__image {
-  max-width: min(100%, 1280px);
+  margin: auto;
+  max-width: calc(100vw - 56px);
   max-height: calc(100vh - 56px);
   border: 1px solid rgba(255, 255, 255, 0.22);
   border-radius: 8px;
   background: #111827;
   box-shadow: 0 24px 70px rgba(0, 0, 0, 0.42);
+  cursor: zoom-in;
+}
+
+.image-lightbox.is-zoomed .image-lightbox__image {
+  max-width: none;
+  max-height: none;
   cursor: zoom-out;
 }
 
