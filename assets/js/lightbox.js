@@ -109,12 +109,19 @@
   overlay.setAttribute("aria-hidden", "true");
   overlay.innerHTML = [
     '<button class="image-lightbox__close" type="button" aria-label="Close image">x</button>',
+    '<button class="image-lightbox__nav image-lightbox__prev" type="button" aria-label="Previous image">&#8249;</button>',
     '<img class="image-lightbox__image" alt="">',
+    '<button class="image-lightbox__nav image-lightbox__next" type="button" aria-label="Next image">&#8250;</button>',
+    '<div class="image-lightbox__count" aria-live="polite"></div>',
   ].join("");
   document.body.appendChild(overlay);
 
   const lightboxImage = overlay.querySelector(".image-lightbox__image");
   const closeButton = overlay.querySelector(".image-lightbox__close");
+  const prevButton = overlay.querySelector(".image-lightbox__prev");
+  const nextButton = overlay.querySelector(".image-lightbox__next");
+  const counter = overlay.querySelector(".image-lightbox__count");
+  let currentIndex = 0;
 
   // WordPress thumbnails embed the displayed dimensions in the filename:
   //   /uploads/2016/03/foo-300x200.png  (thumbnail shown on the page)
@@ -125,6 +132,12 @@
   }
 
   function openLightbox(image) {
+    currentIndex = images.indexOf(image);
+    const hasMany = images.length > 1;
+    prevButton.hidden = !hasMany;
+    nextButton.hidden = !hasMany;
+    counter.hidden = !hasMany;
+    counter.textContent = `${currentIndex + 1} / ${images.length}`;
     const original = image.currentSrc || image.src;
     const fullRes = fullResUrl(original);
     // Try full-res first; fall back to the displayed thumbnail if the original is missing.
@@ -149,6 +162,11 @@
     lightboxImage.removeAttribute("src");
   }
 
+  function step(direction) {
+    if (images.length < 2) return;
+    openLightbox(images[(currentIndex + direction + images.length) % images.length]);
+  }
+
   images.forEach((image) => {
     const link = image.closest("a");
     if (link) {
@@ -171,13 +189,35 @@
     });
   });
 
+  // Swipe left/right on touch screens to move between images.
+  let touchStartX = 0;
+  let touchStartY = 0;
+  overlay.addEventListener("touchstart", (event) => {
+    const touch = event.changedTouches[0];
+    touchStartX = touch.clientX;
+    touchStartY = touch.clientY;
+  }, { passive: true });
+  overlay.addEventListener("touchend", (event) => {
+    const touch = event.changedTouches[0];
+    const dx = touch.clientX - touchStartX;
+    const dy = touch.clientY - touchStartY;
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) step(dx < 0 ? 1 : -1);
+  }, { passive: true });
+
   closeButton.addEventListener("click", closeLightbox);
+  prevButton.addEventListener("click", () => step(-1));
+  nextButton.addEventListener("click", () => step(1));
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) closeLightbox();
   });
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && overlay.classList.contains("is-open")) {
+    if (!overlay.classList.contains("is-open")) return;
+    if (event.key === "Escape") {
       closeLightbox();
+    } else if (event.key === "ArrowLeft") {
+      step(-1);
+    } else if (event.key === "ArrowRight") {
+      step(1);
     }
   });
 })();

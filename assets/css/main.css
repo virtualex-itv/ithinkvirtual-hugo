@@ -714,6 +714,55 @@ blockquote.comment-block {
   background: rgba(37, 99, 235, 0.9);
 }
 
+.image-lightbox__nav {
+  position: fixed;
+  top: 50%;
+  width: 46px;
+  height: 46px;
+  margin-top: -23px;
+  border: 1px solid rgba(255, 255, 255, 0.24);
+  border-radius: 50%;
+  background: rgba(17, 24, 39, 0.88);
+  color: #fff;
+  font: inherit;
+  font-size: 2rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.image-lightbox__nav[hidden] {
+  display: none;
+}
+
+.image-lightbox__prev {
+  left: 16px;
+}
+
+.image-lightbox__next {
+  right: 16px;
+}
+
+.image-lightbox__nav:hover,
+.image-lightbox__nav:focus {
+  background: rgba(37, 99, 235, 0.9);
+}
+
+.image-lightbox__count {
+  position: fixed;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(17, 24, 39, 0.88);
+  color: #fff;
+  font-size: 0.85rem;
+}
+
+.image-lightbox__count[hidden] {
+  display: none;
+}
+
 .comment {
   padding: 18px 0;
   border-bottom: 1px solid var(--line);
