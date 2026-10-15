@@ -15,8 +15,7 @@
   "tags": [
     "homelab",
     "Ubiquiti",
-    "UniFi",
-    "vSphere"
+    "UniFi"
   ],
   "years": [
     "2017"

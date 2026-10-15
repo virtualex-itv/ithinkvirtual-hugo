@@ -8,7 +8,7 @@
   "description": "A VCF 9.1.x readiness checklist: prove the upgrade path, plan the management services network, own the sequence, verify recovery, and test your automation before the maintenance window.",
   "featured_image": "readiness-gates.png",
   "categories": [
-    "How-To's"
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

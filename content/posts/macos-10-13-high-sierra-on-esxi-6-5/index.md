@@ -10,10 +10,10 @@
   "wordpress_url": "https://ithinkvirtual.com/2017/12/31/macos-10-13-high-sierra-on-esxi-6-5/",
   "featured_image": "/uploads/2017/12/0.jpg",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
     "macOS",
     "vSphere"
   ],

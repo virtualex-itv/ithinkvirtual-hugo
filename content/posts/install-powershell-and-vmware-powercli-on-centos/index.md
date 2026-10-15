@@ -10,14 +10,13 @@
   "wordpress_url": "https://ithinkvirtual.com/2018/03/04/install-powershell-and-vmware-powercli-on-centos/",
   "featured_image": "/uploads/2018/03/CentOS_PCLI_BG.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "CentOS",
-    "How-To's",
     "PowerCLI",
-    "VMware",
-    "vSphere"
+    "VMware"
   ],
   "years": [
     "2018"

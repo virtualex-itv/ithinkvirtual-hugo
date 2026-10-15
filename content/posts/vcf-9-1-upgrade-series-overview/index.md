@@ -9,7 +9,8 @@
   "featured_image": "series-overview.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

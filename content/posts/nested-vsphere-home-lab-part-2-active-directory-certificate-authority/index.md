@@ -11,11 +11,11 @@
   "featured_image": "/uploads/2023/04/2023-04-23_16-29-33.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
     "sophos xg",
     "vExpert",

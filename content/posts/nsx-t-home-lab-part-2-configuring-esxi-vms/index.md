@@ -11,13 +11,13 @@
   "featured_image": "/uploads/2019/01/2019-01-21_01-15-38.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
-    "NSX-T",
+    "NSX",
     "vExpert",
     "VMware",
     "vSAN",

@@ -11,11 +11,11 @@
   "featured_image": "/uploads/2024/01/2024-01-06_15-14-52.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
     "vExpert",
     "VMware",

@@ -14,10 +14,8 @@
   "tags": [
     "Veeam",
     "homelab",
-    "How-To's",
     "Backup",
     "VMware",
-    "vSphere",
     "Synology",
     "Linux",
     "iSCSI"

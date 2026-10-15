@@ -10,11 +10,11 @@
   "wordpress_url": "https://ithinkvirtual.com/2018/03/07/vmware-software-manager-the-good-the-bad-the-alternative/",
   "featured_image": "/uploads/2018/03/VSM_BG.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "CentOS",
-    "How-To's",
     "NFS",
     "Synology",
     "VMHGFS",

@@ -10,13 +10,14 @@
   "wordpress_url": "https://ithinkvirtual.com/2016/08/14/create-vmfs5-datastore-on-a-usb-drive/",
   "featured_image": "/uploads/2016/08/VMFS5_USB.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Troubleshooting",
-    "USB_VMFS5"
+    "USB_VMFS5",
+    "vSphere"
   ],
   "years": [
     "2016"

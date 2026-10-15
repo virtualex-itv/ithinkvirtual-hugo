@@ -10,10 +10,10 @@
   "wordpress_url": "https://ithinkvirtual.com/2017/12/31/vsphere-synology-nfs-v4-1/",
   "featured_image": "/uploads/2017/12/NFS41.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
     "NFS",
     "Synology",
     "VMware",

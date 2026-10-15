@@ -14,7 +14,6 @@
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "phpIPAM",
     "Ubuntu"
   ],

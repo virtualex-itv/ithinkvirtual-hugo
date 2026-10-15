@@ -10,7 +10,8 @@
   "wordpress_url": "https://ithinkvirtual.com/2017/03/27/upgrading-vmware-vsphere-data-protection/",
   "featured_image": "/uploads/2017/03/VDP_BG.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "VDP",

@@ -9,7 +9,7 @@
   "featured_image": "readiness-gates-lessons-learned.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

@@ -9,7 +9,8 @@
   "featured_image": "part-1-vcf-operations.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

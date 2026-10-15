@@ -9,7 +9,8 @@
   "featured_image": "part-6-housekeeping-workload-domain.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

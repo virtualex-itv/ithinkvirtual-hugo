@@ -11,13 +11,13 @@
   "featured_image": "/uploads/2023/03/vSphere-8-1850999778.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
-    "NSX-T",
+    "NSX",
     "VMware",
     "VMware Aria",
     "VMware Fusion",

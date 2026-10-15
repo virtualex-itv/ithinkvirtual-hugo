@@ -10,11 +10,11 @@
   "wordpress_url": "https://ithinkvirtual.com/2019/01/21/create-an-esxi-6-7-vm-template/",
   "featured_image": "/uploads/2019/01/2019-01-21_16-14-09.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
     "Template",
     "vExpert",

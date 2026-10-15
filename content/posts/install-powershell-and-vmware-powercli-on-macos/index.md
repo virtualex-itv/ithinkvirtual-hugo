@@ -10,14 +10,13 @@
   "wordpress_url": "https://ithinkvirtual.com/2018/03/04/install-powershell-and-vmware-powercli-on-macos/",
   "featured_image": "/uploads/2018/03/macOS_PCLI_BG.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
     "macOS",
     "PowerCLI",
-    "VMware",
-    "vSphere"
+    "VMware"
   ],
   "years": [
     "2018"

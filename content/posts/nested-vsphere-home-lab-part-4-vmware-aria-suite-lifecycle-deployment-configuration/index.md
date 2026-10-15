@@ -11,14 +11,15 @@
   "featured_image": "/uploads/2025/01/848b3966-c49c-4d31-adcc-75a69204bc67.webp",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
     "Nested Virtualization",
     "vExpert",
-    "VMware"
+    "VMware",
+    "vSphere"
   ],
   "years": [
     "2025"

@@ -10,10 +10,10 @@
   "wordpress_url": "https://ithinkvirtual.com/2018/02/04/deploy-a-virtual-appliance-using-powercli/",
   "featured_image": "/uploads/2018/02/OVA_PCLI_BG.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
     "PowerCLI",
     "VMware",
     "vSphere"

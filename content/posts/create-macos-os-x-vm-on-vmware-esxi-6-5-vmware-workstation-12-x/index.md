@@ -10,11 +10,12 @@
   "wordpress_url": "https://ithinkvirtual.com/2017/02/12/create-macos-os-x-vm-on-vmware-esxi-6-5-vmware-workstation-12-x/",
   "featured_image": "/uploads/2017/02/macos-vmware.jpg",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
-    "macOS"
+    "macOS",
+    "vSphere"
   ],
   "years": [
     "2017"

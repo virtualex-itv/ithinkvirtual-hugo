@@ -9,7 +9,8 @@
   "featured_image": "part-3-automation-logs.png",
   "categories": [
     "Home Lab",
-    "How-To's"
+    "How-To's",
+    "VMware Cloud Foundation"
   ],
   "tags": [
     "VCF",

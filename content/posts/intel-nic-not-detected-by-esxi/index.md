@@ -10,11 +10,12 @@
   "wordpress_url": "https://ithinkvirtual.com/2016/03/21/intel-nic-not-detected-by-esxi/",
   "featured_image": "/uploads/2016/03/2016-03-18_18-02-50.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "How-To's",
-    "Troubleshooting"
+    "Troubleshooting",
+    "vSphere"
   ],
   "years": [
     "2016"

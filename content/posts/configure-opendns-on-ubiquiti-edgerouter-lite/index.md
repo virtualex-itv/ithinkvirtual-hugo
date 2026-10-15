@@ -12,9 +12,7 @@
   "categories": [
     "How-To's"
   ],
-  "tags": [
-    "How-To's"
-  ],
+  "tags": [],
   "years": [
     "2016"
   ],

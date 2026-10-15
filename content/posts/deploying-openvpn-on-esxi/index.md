@@ -10,10 +10,12 @@
   "wordpress_url": "https://ithinkvirtual.com/2017/02/12/deploying-openvpn-on-esxi/",
   "featured_image": "/uploads/2017/02/openvpn-as-banner.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
-    "OpenVPN"
+    "OpenVPN",
+    "vSphere"
   ],
   "years": [
     "2017"

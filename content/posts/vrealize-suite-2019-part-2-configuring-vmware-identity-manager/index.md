@@ -14,11 +14,9 @@
     "How-To's"
   ],
   "tags": [
-    "How-To's",
     "Nested Virtualization",
     "VMware",
-    "vRealize Suite",
-    "vSphere"
+    "vRealize Suite"
   ],
   "years": [
     "2020"

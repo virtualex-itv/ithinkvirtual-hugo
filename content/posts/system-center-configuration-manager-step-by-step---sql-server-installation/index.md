@@ -13,7 +13,6 @@
     "How-To's"
   ],
   "tags": [
-    "How-To's",
     "System Center Configuration Manager"
   ],
   "years": [

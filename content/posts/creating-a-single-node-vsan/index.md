@@ -10,12 +10,13 @@
   "wordpress_url": "https://ithinkvirtual.com/2016/05/02/creating-a-single-node-vsan/",
   "featured_image": "/uploads/2016/05/CNvYkfJUEAEwlBb.png",
   "categories": [
-    "How-To's"
+    "How-To's",
+    "Virtualization"
   ],
   "tags": [
     "homelab",
-    "How-To's",
-    "vSAN"
+    "vSAN",
+    "vSphere"
   ],
   "years": [
     "2016"
