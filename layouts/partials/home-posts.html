@@ -1,0 +1,5 @@
+{{/* Posts for the homepage: any post with `"pinned": true` in its front matter first, then the rest by date. */}}
+{{ $posts := where site.RegularPages "Section" "posts" }}
+{{ $pinned := where $posts "Params.pinned" true }}
+{{ $rest := complement $pinned $posts }}
+{{ return ($pinned | append $rest) }}

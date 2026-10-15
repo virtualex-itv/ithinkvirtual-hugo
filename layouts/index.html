@@ -1,5 +1,5 @@
 {{ define "main" }}
-  {{ $paginator := .Paginate (where site.RegularPages "Section" "posts") }}
+  {{ $paginator := .Paginate (partial "home-posts.html") }}
   {{ $pages := $paginator.Pages }}
   {{ $lcp := partial "lcp-page.html" $pages }}
   {{ $lcpRef := "" }}
@@ -16,7 +16,7 @@
 {{ end }}
 
 {{ define "head-extra" }}
-  {{ $paginator := .Paginate (where site.RegularPages "Section" "posts") }}
+  {{ $paginator := .Paginate (partial "home-posts.html") }}
   {{ $pages := $paginator.Pages }}
   {{ with partial "lcp-page.html" $pages }}
     {{ partial "post-card-preload.html" . }}
