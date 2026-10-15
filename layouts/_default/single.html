@@ -9,6 +9,16 @@
     <div class="content">
       {{ .Content }}
     </div>
+    {{ if eq .Section "posts" }}
+      {{ $newer := .NextInSection }}
+      {{ $older := .PrevInSection }}
+      {{ if or $newer $older }}
+        <nav class="post-nav" aria-label="More posts">
+          {{ with $newer }}<a class="post-nav-link post-nav-newer" rel="prev" href="{{ .RelPermalink }}"><span>&larr; Newer post</span><strong>{{ .Title }}</strong></a>{{ else }}<span></span>{{ end }}
+          {{ with $older }}<a class="post-nav-link post-nav-older" rel="next" href="{{ .RelPermalink }}"><span>Older post &rarr;</span><strong>{{ .Title }}</strong></a>{{ end }}
+        </nav>
+      {{ end }}
+    {{ end }}
     {{ partial "historical-comments.html" . }}
     {{ partial "giscus.html" . }}
   </article>

@@ -45,6 +45,9 @@ posts = '/posts/:slug/'
 [permalinks.term]
 years = '/:slug/'
 
+[pagination]
+pagerSize = 12
+
 [markup.goldmark.renderer]
 unsafe = true
 

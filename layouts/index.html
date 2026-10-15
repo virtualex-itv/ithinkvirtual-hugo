@@ -1,5 +1,6 @@
 {{ define "main" }}
-  {{ $pages := first 12 (where site.RegularPages "Section" "posts") }}
+  {{ $paginator := .Paginate (where site.RegularPages "Section" "posts") }}
+  {{ $pages := $paginator.Pages }}
   {{ $lcp := partial "lcp-page.html" $pages }}
   {{ $lcpRef := "" }}
   {{ with $lcp }}{{ $lcpRef = .RelPermalink }}{{ end }}
@@ -11,10 +12,12 @@
       {{ partial "post-card.html" (dict "page" . "lcp" $lcpRef) }}
     {{ end }}
   </section>
+  {{ partial "pagination.html" $paginator }}
 {{ end }}
 
 {{ define "head-extra" }}
-  {{ $pages := first 12 (where site.RegularPages "Section" "posts") }}
+  {{ $paginator := .Paginate (where site.RegularPages "Section" "posts") }}
+  {{ $pages := $paginator.Pages }}
   {{ with partial "lcp-page.html" $pages }}
     {{ partial "post-card-preload.html" . }}
   {{ end }}

@@ -1,0 +1,16 @@
+{{/* Older/newer links for a paginated listing.  Pass the pager: partial "pagination.html" $paginator */}}
+{{ if gt .TotalPages 1 }}
+  <nav class="pager" aria-label="Pagination">
+    {{ if .HasPrev }}
+      <a class="pager-link" rel="prev" href="{{ .Prev.URL }}">&larr; Newer posts</a>
+    {{ else }}
+      <span class="pager-link is-disabled">&larr; Newer posts</span>
+    {{ end }}
+    <span class="pager-count">Page {{ .PageNumber }} of {{ .TotalPages }}</span>
+    {{ if .HasNext }}
+      <a class="pager-link" rel="next" href="{{ .Next.URL }}">Older posts &rarr;</a>
+    {{ else }}
+      <span class="pager-link is-disabled">Older posts &rarr;</span>
+    {{ end }}
+  </nav>
+{{ end }}
