@@ -1,0 +1,45 @@
+{{/* Open Graph and Twitter Card tags so shared links show a title, description, and featured image.
+     Featured images in a page bundle are resized to a 1200px-wide JPEG (what social crawlers handle best);
+     older posts keep their /uploads/... path.  Pages without a featured image fall back to the avatar. */}}
+{{ $title := cond .IsHome site.Title .Title }}
+{{ $desc := "" }}
+{{ with .Description }}{{ $desc = . }}{{ else }}{{ if and (not .IsHome) .Summary }}{{ $desc = .Summary | plainify | truncate 200 }}{{ else }}{{ $desc = site.Params.description }}{{ end }}{{ end }}
+{{ $image := "" }}
+{{ $w := 0 }}
+{{ $h := 0 }}
+{{ with .Params.featured_image }}
+  {{ with $.Resources.GetMatch . }}
+    {{ if eq .ResourceType "image" }}
+      {{ $img := .Process "resize 1200x jpg q85" }}
+      {{ $image = $img.Permalink }}
+      {{ $w = $img.Width }}
+      {{ $h = $img.Height }}
+    {{ end }}
+  {{ else }}
+    {{ $image = . | absURL }}
+  {{ end }}
+{{ end }}
+{{ $large := ne $image "" }}
+{{ if not $large }}{{ $image = "images/avatar.png" | absURL }}{{ end }}
+<link rel="canonical" href="{{ .Permalink }}">
+<meta property="og:site_name" content="{{ site.Title }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $desc }}">
+<meta property="og:url" content="{{ .Permalink }}">
+<meta property="og:type" content="{{ if eq .Section "posts" }}article{{ else }}website{{ end }}">
+<meta property="og:image" content="{{ $image }}">
+{{ if and $large (gt $w 0) }}
+<meta property="og:image:width" content="{{ $w }}">
+<meta property="og:image:height" content="{{ $h }}">
+{{ end }}
+{{ if eq .Section "posts" }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+<meta property="article:author" content="{{ site.Params.author }}">
+{{ end }}
+<meta name="twitter:card" content="{{ if $large }}summary_large_image{{ else }}summary{{ end }}">
+<meta name="twitter:site" content="@iVirtuAlex">
+<meta name="twitter:creator" content="@iVirtuAlex">
+<meta name="twitter:title" content="{{ $title }}">
+<meta name="twitter:description" content="{{ $desc }}">
+<meta name="twitter:image" content="{{ $image }}">
+<meta name="fediverse:creator" content="@virtualex@hachyderm.io">
