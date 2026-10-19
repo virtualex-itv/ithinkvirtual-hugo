@@ -44,6 +44,42 @@
   const content = document.querySelector(".content");
 
   if (content) {
+    // Copy button on every code block. The wrapper keeps the button fixed while the pre scrolls sideways.
+    content.querySelectorAll("pre").forEach((pre) => {
+      if (pre.closest(".lntable")) return; // Chroma line-number tables would get a button per column.
+      const wrap = document.createElement("div");
+      wrap.className = "code-block";
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "code-copy";
+      btn.textContent = "Copy";
+      btn.setAttribute("aria-label", "Copy code to clipboard");
+      btn.addEventListener("click", async () => {
+        const text = pre.innerText;
+        try {
+          await navigator.clipboard.writeText(text);
+        } catch (e) {
+          const ta = document.createElement("textarea");
+          ta.value = text;
+          ta.style.position = "fixed";
+          ta.style.opacity = "0";
+          document.body.appendChild(ta);
+          ta.select();
+          try { document.execCommand("copy"); } catch (err) {}
+          document.body.removeChild(ta);
+        }
+        btn.textContent = "Copied!";
+        btn.classList.add("is-copied");
+        setTimeout(() => {
+          btn.textContent = "Copy";
+          btn.classList.remove("is-copied");
+        }, 1800);
+      });
+      wrap.appendChild(btn);
+    });
+
     const headings = Array.from(content.querySelectorAll("h2, h3, h4"));
     const toc = document.querySelector("[data-post-toc]");
     const tocNav = toc ? toc.querySelector("nav") : null;
