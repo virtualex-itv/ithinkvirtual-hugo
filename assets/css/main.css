@@ -289,6 +289,13 @@ pre code {
   text-decoration: none;
 }
 
+.nav-icon {
+  display: inline-block;
+  width: 1.5em;
+  margin-right: 8px;
+  text-align: center;
+}
+
 .main {
   min-width: 0;
 }

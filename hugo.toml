@@ -65,21 +65,26 @@ home = ['HTML', 'RSS']
 [menu]
 [[menu.main]]
 name = 'Posts'
+pre = '📝'
 url = '/posts/'
 weight = 10
 [[menu.main]]
 name = 'Categories'
+pre = '🗂️'
 url = '/categories/'
 weight = 20
 [[menu.main]]
 name = 'Tags'
+pre = '🏷️'
 url = '/tags/'
 weight = 30
 [[menu.main]]
 name = 'Videos'
+pre = '🎬'
 url = '/videos/'
 weight = 40
 [[menu.main]]
 name = 'About'
+pre = '👤'
 url = '/about/'
 weight = 50

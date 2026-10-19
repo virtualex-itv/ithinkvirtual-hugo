@@ -68,7 +68,7 @@
         </button>
         <nav class="nav" aria-label="Main navigation">
           {{ range site.Menus.main }}
-            <a href="{{ .URL }}">{{ .Name }}</a>
+            <a href="{{ .URL }}">{{ with .Pre }}<span class="nav-icon" aria-hidden="true">{{ . }}</span>{{ end }}{{ .Name }}</a>
           {{ end }}
         </nav>
         <footer class="site-footer">
