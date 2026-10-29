@@ -88,3 +88,8 @@ name = 'About'
 pre = '👤'
 url = '/about/'
 weight = 50
+[[menu.main]]
+name = 'Buy Me a Coffee'
+pre = '☕'
+url = 'https://buymeacoffee.com/virtualex'
+weight = 60

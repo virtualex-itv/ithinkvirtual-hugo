@@ -10,6 +10,7 @@
       {{ .Content }}
     </div>
     {{ if eq .Section "posts" }}
+      {{ partial "support-footer.html" . }}
       {{ $newer := .NextInSection }}
       {{ $older := .PrevInSection }}
       {{ if or $newer $older }}

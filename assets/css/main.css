@@ -995,6 +995,20 @@ a.pager-link:hover {
   font-size: 0.9rem;
 }
 
+.support-footer {
+  margin: 28px 0 20px;
+  padding: 14px 18px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--accent-soft);
+  color: var(--muted);
+  text-align: center;
+}
+
+.support-footer p {
+  margin: 0;
+}
+
 .post-nav {
   padding-top: 22px;
   border-top: 1px solid var(--line);
