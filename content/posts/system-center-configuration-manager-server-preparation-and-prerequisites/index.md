@@ -134,7 +134,7 @@ I'll assume this has already been done prior to joining the Site Server to the d
 
 ### Firewall Configuration
 
-I have created the following batch script and posted it on my GitHub [here](https://github.com/virtualex-itv/itv-lib/blob/master/batch/bat/sccm-fw_cfg.bat).  Ensure that your Firewall is on and run this script via an elevated command prompt or PowerShell on your Site Server.
+I have created the following batch script and posted it on my GitHub [here](https://github.com/virtualex-itv/itv-scripts/blob/master/batch/bat/sccm-fw_cfg.bat).  Ensure that your Firewall is on and run this script via an elevated command prompt or PowerShell on your Site Server.
 
 <figure class="image-gallery">
 <img src="/uploads/2017/11/2017-11-05_18-16-37-300x188.png" alt="" loading="lazy">
@@ -158,7 +158,7 @@ Before you can install SCCM on your server, you will need to install the followi
 - **BITS**
 - **ASP.Net**
 
-Rather than using the GUI to install these, I've created the following PowerShell script to install said Roles and Features.  You can find this on my GitHub as well [here](https://github.com/virtualex-itv/itv-lib/blob/master/powershell/powershell/sccm-roles_features.ps1).
+Rather than using the GUI to install these, I've created the following PowerShell script to install said Roles and Features.  You can find this on my GitHub as well [here](https://github.com/virtualex-itv/itv-scripts/blob/master/powershell/powershell/sccm-roles_features.ps1).
 
 ![](/uploads/2017/11/2017-11-05_18-46-19-300x238.png)
 
